@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var isAnimated: Bool = false
     @State private var imageScaled: CGFloat = 1
     @State private var imageOffset: CGSize = .zero
+    @State private var isDrawOpen: Bool = false
     
     //MARK: - FUNCTION
     
@@ -64,6 +65,26 @@ struct ContentView: View {
                                     }
                                 }
                         )
+                    //MARK: 3. Magnification
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { value in
+                                    withAnimation(.linear(duration: 1)) {
+                                        if imageScaled >= 1 && imageScaled <= 5 {
+                                            imageScaled = value
+                                        } else if imageScaled > 5 {
+                                            imageScaled = 5
+                                        }
+                                    }
+                            }
+                                .onEnded { _ in
+                                    if imageScaled > 5 {
+                                        imageScaled = 5
+                                    } else if imageScaled <= 1 {
+                                        ResetImageState()
+                                    }
+                                }
+                        )
                     
                 }//: ZStack
                 .navigationTitle("Pinch and Zoom")
@@ -77,10 +98,87 @@ struct ContentView: View {
                 .overlay(
                     InfoPanelView(scale: imageScaled, offset: imageOffset)
                         .padding(.horizontal)
-                        .padding(.top, 30)
+                        .padding(.top, 10)
                     , alignment: .top
                 )
-                
+                //MARK: Control UI
+                .overlay(
+                    Group {
+                        HStack {
+                            //Scale down
+                            Button {
+                                withAnimation(.spring()) {
+                                    if imageScaled > 1 {
+                                        imageScaled -= 1
+                                        
+                                        if imageScaled <= 1 {
+                                            ResetImageState()
+                                        }
+                                    }
+                                }
+                            } label: {
+                                ControlImageView(icon: "minus.magnifyingglass")
+                            }
+                            
+                            //Reset
+                            Button {
+                                ResetImageState()
+                            } label: {
+                                ControlImageView(icon: "arrow.up.left.and.down.right.magnifyingglass")
+                            }
+                            
+                            //Scele up
+                            Button {
+                                withAnimation(.spring()) {
+                                    if imageScaled < 5 {
+                                        imageScaled += 1
+                                        
+                                        if imageScaled > 5 {
+                                            imageScaled = 5
+                                        }
+                                    }
+                                }
+                            } label: {
+                                ControlImageView(icon: "plus.magnifyingglass")
+                            }
+                        }
+                        
+                        .padding(EdgeInsets(top: 20, leading: 12, bottom: 20, trailing: 12))
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                        .opacity(isAnimated ? 1 : 0)
+                    }
+                        .padding(.bottom, 30),
+                        alignment: .bottom
+                )
+                //MARK: Drawer
+                .overlay (
+                    HStack(spacing: 12) {
+                        //MARK: Drawer Handle
+                        
+                        Image(systemName: isDrawOpen ? "chevron.compact.right" : "chevrom.compact.left")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 40)
+                            .foregroundStyle(.secondary)
+                            .onTapGesture(perform: {
+                                withAnimation(.easeOut) {
+                                    isDrawOpen.toggle()
+                                }
+                            })
+                        //MARK: Drawer
+                        Spacer()
+                    }//END: Drawer
+                        .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                        .opacity(isAnimated ? 1 : 0)
+                        .frame(width: 260)
+                        .padding(.top, UIScreen.main.bounds.height / 12)
+                        .offset(x: isDrawOpen ? 20 : 215)
+                    , alignment: .topTrailing
+                    
+                )
             }//END: Navigation
             .navigationViewStyle(.stack)
         }

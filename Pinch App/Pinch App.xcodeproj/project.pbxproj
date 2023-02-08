@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC5876232990A5C2000A07A9 /* ControlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5876222990A5C2000A07A9 /* ControlImageView.swift */; };
 		CC8A6925298CA0820084CE4A /* Pinch_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8A6924298CA0820084CE4A /* Pinch_AppApp.swift */; };
 		CC8A6927298CA0820084CE4A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8A6926298CA0820084CE4A /* ContentView.swift */; };
 		CC8A6929298CA0870084CE4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8A6928298CA0870084CE4A /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC5876222990A5C2000A07A9 /* ControlImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlImageView.swift; sourceTree = "<group>"; };
 		CC8A6921298CA0820084CE4A /* Pinch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pinch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC8A6924298CA0820084CE4A /* Pinch_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinch_AppApp.swift; sourceTree = "<group>"; };
 		CC8A6926298CA0820084CE4A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -46,6 +48,7 @@
 			isa = PBXGroup;
 			children = (
 				CCABAC81298D2D69000771D1 /* InfoPanelView.swift */,
+				CC5876222990A5C2000A07A9 /* ControlImageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC5876232990A5C2000A07A9 /* ControlImageView.swift in Sources */,
 				CC8A6927298CA0820084CE4A /* ContentView.swift in Sources */,
 				CC8A6925298CA0820084CE4A /* Pinch_AppApp.swift in Sources */,
 				CCABAC82298D2D69000771D1 /* InfoPanelView.swift in Sources */,

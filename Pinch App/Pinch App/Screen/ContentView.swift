@@ -14,6 +14,9 @@ struct ContentView: View {
     @State private var imageOffset: CGSize = .zero
     @State private var isDrawOpen: Bool = false
     
+    let pages: [Page] = pagesData
+    @State private var pageIndex: Int = 1
+    
     //MARK: - FUNCTION
     
     func ResetImageState() {
@@ -21,6 +24,10 @@ struct ContentView: View {
             imageScaled = 1
             imageOffset = .zero
         }
+    }
+    
+    func CurrentPage() -> String {
+        return pages[pageIndex - 1].imageName
     }
     
     //MARK: - CONTENT
@@ -32,7 +39,7 @@ struct ContentView: View {
                     Color.clear
                     
                     //MARK: Page Image
-                    Image("magazine-front-cover")
+                    Image(CurrentPage())
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
@@ -45,6 +52,7 @@ struct ContentView: View {
                         .onTapGesture(count: 2, perform: {
                             if imageScaled == 1 {
                                 withAnimation(.spring()) {
+                                    PlayAudio(sound: "click", type: "wav")
                                     imageScaled = 5
                                 }
                             } else {
@@ -156,7 +164,7 @@ struct ContentView: View {
                     HStack(spacing: 12) {
                         //MARK: Drawer Handle
                         
-                        Image(systemName: isDrawOpen ? "chevron.compact.right" : "chevrom.compact.left")
+                        Image(systemName: isDrawOpen ? "chevron.compact.right" : "chevron.compact.left")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 40)
@@ -166,7 +174,22 @@ struct ContentView: View {
                                     isDrawOpen.toggle()
                                 }
                             })
-                        //MARK: Drawer
+                        //MARK: Thumbnail
+                        ForEach(pages) { item in
+                            Image(item.thumbnailName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80)
+                                .cornerRadius(8)
+                                .shadow(radius: 4)
+                                .opacity(isDrawOpen ? 1 : 0)
+                                .animation(.easeOut(duration: 0.5), value: isDrawOpen)
+                                .onTapGesture(perform: {
+                                    isAnimated = true
+                                    pageIndex = item.id
+                                })
+                        }
+                        
                         Spacer()
                     }//END: Drawer
                         .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))

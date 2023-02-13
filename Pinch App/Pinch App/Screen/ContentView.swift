@@ -116,6 +116,7 @@ struct ContentView: View {
                             //Scale down
                             Button {
                                 withAnimation(.spring()) {
+                                    PlayAudio(sound: "click", type: "wav")
                                     if imageScaled > 1 {
                                         imageScaled -= 1
                                         
@@ -130,6 +131,7 @@ struct ContentView: View {
                             
                             //Reset
                             Button {
+                                PlayAudio(sound: "click", type: "wav")
                                 ResetImageState()
                             } label: {
                                 ControlImageView(icon: "arrow.up.left.and.down.right.magnifyingglass")
@@ -138,6 +140,7 @@ struct ContentView: View {
                             //Scele up
                             Button {
                                 withAnimation(.spring()) {
+                                    PlayAudio(sound: "click", type: "wav")
                                     if imageScaled < 5 {
                                         imageScaled += 1
                                         
@@ -171,6 +174,7 @@ struct ContentView: View {
                             .foregroundStyle(.secondary)
                             .onTapGesture(perform: {
                                 withAnimation(.easeOut) {
+                                    PlayAudio(sound: "click", type: "wav")
                                     isDrawOpen.toggle()
                                 }
                             })
@@ -185,6 +189,7 @@ struct ContentView: View {
                                 .opacity(isDrawOpen ? 1 : 0)
                                 .animation(.easeOut(duration: 0.5), value: isDrawOpen)
                                 .onTapGesture(perform: {
+                                    PlayAudio(sound: "click", type: "wav")
                                     isAnimated = true
                                     pageIndex = item.id
                                 })
